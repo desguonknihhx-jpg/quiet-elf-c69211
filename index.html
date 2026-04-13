@@ -2,932 +2,735 @@
 <html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>بەڕێوەبەری دارایی کەسی</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --deep-purple: #2e0249;
-            --deep-purple-light: #420268;
-            --deep-purple-dark: #1a0130;
-            --gold: #ffd700;
-            --gold-dim: rgba(255, 215, 0, 0.15);
-            --gold-glow: rgba(255, 215, 0, 0.35);
-            --dark-grey: #111111;
-            --card-bg: rgba(46, 2, 73, 0.55);
-            --card-border: rgba(255, 215, 0, 0.12);
-            --card-hover-border: rgba(255, 215, 0, 0.3);
-            --text-primary: #f5f0ff;
-            --text-secondary: #b8a0d0;
-            --text-muted: #7a6090;
-            --danger: #ff4d6a;
-            --danger-dim: rgba(255, 77, 106, 0.15);
-            --success: #34d399;
-            --success-dim: rgba(52, 211, 153, 0.15);
-            --radius: 18px;
-            --radius-sm: 10px;
-            --font: 'Noto Sans Arabic', sans-serif;
+            --dp: #2e0249; --dpl: #420268; --dpd: #1a0130;
+            --gold: #ffd700; --gold-dim: rgba(255,215,0,0.12); --gold-mid: rgba(255,215,0,0.25);
+            --dg: #0e0e0e; --card: rgba(42,2,66,0.6); --card-b: rgba(255,215,0,0.1);
+            --card-bh: rgba(255,215,0,0.28);
+            --t1: #f3edff; --t2: #b5a0cc; --t3: #7a6090;
+            --red: #ff4d6a; --red-d: rgba(255,77,106,0.13);
+            --grn: #34d399; --grn-d: rgba(52,211,153,0.13);
+            --r: 16px; --rs: 10px; --rss: 8px;
+            --f: 'Noto Sans Arabic', sans-serif;
+            --safe-b: env(safe-area-inset-bottom, 0px);
         }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
         body {
-            font-family: var(--font);
-            background: var(--dark-grey);
-            color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-            line-height: 1.7;
+            font-family: var(--f); background: var(--dg); color: var(--t1);
+            min-height: 100vh; min-height: -webkit-fill-available;
+            overflow-x: hidden; line-height: 1.7;
+            -webkit-tap-highlight-color: transparent;
+            padding-bottom: calc(70px + var(--safe-b));
         }
 
-        /* === Background === */
-        .bg-layer { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-        .bg-layer::before {
-            content: ''; position: absolute; inset: 0;
-            background:
-                radial-gradient(ellipse 600px 400px at 15% 25%, rgba(46, 2, 73, 0.9) 0%, transparent 70%),
-                radial-gradient(ellipse 500px 500px at 85% 75%, rgba(46, 2, 73, 0.7) 0%, transparent 70%),
-                radial-gradient(ellipse 300px 300px at 50% 50%, rgba(66, 2, 104, 0.4) 0%, transparent 70%);
+        /* === BG === */
+        .bg-fx { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .bg-fx::before {
+            content:''; position:absolute; inset:0;
+            background: radial-gradient(ellipse 80% 60% at 20% 20%, rgba(46,2,73,0.95), transparent 70%),
+                        radial-gradient(ellipse 70% 70% at 80% 80%, rgba(46,2,73,0.7), transparent 70%),
+                        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(66,2,104,0.3), transparent 70%);
         }
-        .orb { position: absolute; border-radius: 50%; filter: blur(80px); animation: orbFloat 20s ease-in-out infinite; }
-        .orb-1 { width: 350px; height: 350px; background: rgba(255, 215, 0, 0.08); top: -100px; right: -50px; animation-duration: 25s; }
-        .orb-2 { width: 250px; height: 250px; background: rgba(46, 2, 73, 0.6); bottom: 10%; left: -80px; animation-duration: 30s; animation-delay: -5s; }
-        .orb-3 { width: 200px; height: 200px; background: rgba(255, 215, 0, 0.05); top: 50%; right: 20%; animation-duration: 22s; animation-delay: -10s; }
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -40px) scale(1.1); }
-            50% { transform: translate(-20px, 20px) scale(0.95); }
-            75% { transform: translate(15px, 35px) scale(1.05); }
-        }
+        .orb { position:absolute; border-radius:50%; filter:blur(90px); animation:oF 22s ease-in-out infinite; }
+        .o1 { width:300px;height:300px;background:rgba(255,215,0,0.06);top:-80px;right:-60px;animation-duration:28s; }
+        .o2 { width:220px;height:220px;background:rgba(46,2,73,0.5);bottom:15%;left:-60px;animation-duration:32s;animation-delay:-6s; }
+        @keyframes oF { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(25px,-35px) scale(1.08)} 66%{transform:translate(-15px,25px) scale(0.94)} }
         .noise {
-            position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.025;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            background-size: 150px;
+            position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.02;
+            background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
         /* === Layout === */
-        .app-container { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; padding: 32px 20px 60px; }
+        .app { position:relative; z-index:2; max-width:920px; margin:0 auto; padding:20px 14px 30px; }
         .glass {
-            background: var(--card-bg);
-            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--card-border);
-            border-radius: var(--radius);
-            transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+            background:var(--card); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+            border:1px solid var(--card-b); border-radius:var(--r);
+            transition:border-color .35s ease, box-shadow .35s ease;
         }
-        .glass:hover { border-color: var(--card-hover-border); }
+        .glass:hover { border-color:var(--card-bh); }
 
         /* === Header === */
-        .header { padding: 32px 36px; margin-bottom: 24px; position: relative; overflow: hidden; }
-        .header::after {
-            content: ''; position: absolute; bottom: 0; right: 36px; left: 36px; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold-dim), var(--card-border), var(--gold-dim), transparent);
-        }
-        .header-top { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
-        .header-icon {
-            width: 44px; height: 44px; background: var(--gold-dim); border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 18px; flex-shrink: 0;
-        }
-        .header-date { font-size: 15px; font-weight: 500; color: var(--text-secondary); }
-        .header-welcome { font-size: 28px; font-weight: 800; color: var(--text-primary); margin-top: 12px; letter-spacing: -0.3px; }
-        .header-welcome span { color: var(--gold); }
+        .hdr { padding:24px 22px; margin-bottom:16px; position:relative; overflow:hidden; }
+        .hdr::after { content:''; position:absolute; bottom:0; right:22px; left:22px; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),var(--card-b),var(--gold-dim),transparent); }
+        .hdr-row { display:flex; align-items:center; gap:12px; margin-bottom:4px; }
+        .hdr-ico { width:40px;height:40px;background:var(--gold-dim);border-radius:11px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;flex-shrink:0; }
+        .hdr-date { font-size:14px; font-weight:500; color:var(--t2); }
+        .hdr-title { font-size:24px; font-weight:900; color:var(--t1); margin-top:10px; letter-spacing:-0.3px; line-height:1.3; }
+        .hdr-title span { color:var(--gold); }
 
         /* === Stats === */
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
-        .stat-card { padding: 24px 20px; text-align: center; position: relative; overflow: hidden; }
-        .stat-card::before { content: ''; position: absolute; top: 0; right: 0; left: 0; height: 3px; border-radius: var(--radius) var(--radius) 0 0; }
-        .stat-card.salary::before { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
-        .stat-card.expense::before { background: linear-gradient(90deg, transparent, var(--danger), transparent); }
-        .stat-card.balance::before { background: linear-gradient(90deg, transparent, var(--success), transparent); }
-        .stat-icon {
-            width: 40px; height: 40px; border-radius: 10px;
-            display: inline-flex; align-items: center; justify-content: center; font-size: 16px; margin-bottom: 12px;
+        .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px; }
+        .st { padding:18px 14px; text-align:center; position:relative; overflow:hidden; }
+        .st::before { content:''; position:absolute; top:0; right:0; left:0; height:3px; border-radius:var(--r) var(--r) 0 0; }
+        .st.sal::before { background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+        .st.exp::before { background:linear-gradient(90deg,transparent,var(--red),transparent); }
+        .st.bal::before { background:linear-gradient(90deg,transparent,var(--grn),transparent); }
+        .st-ico { width:36px;height:36px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;margin-bottom:8px; }
+        .st.sal .st-ico { background:var(--gold-dim); color:var(--gold); }
+        .st.exp .st-ico { background:var(--red-d); color:var(--red); }
+        .st.bal .st-ico { background:var(--grn-d); color:var(--grn); }
+        .st-lbl { font-size:12px; font-weight:500; color:var(--t3); margin-bottom:4px; }
+        .st-val { font-size:18px; font-weight:800; letter-spacing:-0.4px; transition:all .4s ease; }
+        .st.sal .st-val { color:var(--gold); }
+        .st.exp .st-val { color:var(--red); }
+        .st.bal .st-val { color:var(--grn); }
+        .st-unit { font-size:11px; font-weight:500; color:var(--t3); margin-top:2px; }
+        .sal-edit { margin-top:8px; display:flex; align-items:center; justify-content:center; gap:5px; }
+        .sal-inp {
+            width:85px; background:rgba(0,0,0,.35); border:1px solid rgba(255,215,0,.08);
+            border-radius:6px; padding:5px 6px; font-family:var(--f); font-size:12px;
+            font-weight:600; color:var(--gold); text-align:center; outline:none;
+            transition:border-color .3s,box-shadow .3s;
         }
-        .stat-card.salary .stat-icon { background: var(--gold-dim); color: var(--gold); }
-        .stat-card.expense .stat-icon { background: var(--danger-dim); color: var(--danger); }
-        .stat-card.balance .stat-icon { background: var(--success-dim); color: var(--success); }
-        .stat-label { font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; }
-        .stat-value { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; transition: all 0.5s ease; }
-        .stat-card.salary .stat-value { color: var(--gold); }
-        .stat-card.expense .stat-value { color: var(--danger); }
-        .stat-card.balance .stat-value { color: var(--success); }
-        .stat-unit { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-top: 2px; }
-        .salary-edit-wrap { margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .salary-input {
-            width: 100px; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,215,0,0.1);
-            border-radius: 6px; padding: 5px 8px; font-family: var(--font); font-size: 13px;
-            font-weight: 600; color: var(--gold); text-align: center; outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        .sal-inp:focus { border-color:var(--gold); box-shadow:0 0 0 3px var(--gold-dim); }
+        .sal-btn {
+            background:var(--gold-dim); border:1px solid rgba(255,215,0,.18); color:var(--gold);
+            border-radius:6px; padding:5px 8px; font-family:var(--f); font-size:11px; font-weight:700;
+            cursor:pointer; transition:all .2s;
         }
-        .salary-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
-        .btn-save-salary {
-            background: var(--gold-dim); border: 1px solid rgba(255,215,0,0.2); color: var(--gold);
-            border-radius: 6px; padding: 5px 10px; font-family: var(--font); font-size: 12px; font-weight: 700;
-            cursor: pointer; transition: all 0.25s ease;
-        }
-        .btn-save-salary:hover { background: var(--gold); color: var(--deep-purple-dark); }
+        .sal-btn:hover { background:var(--gold); color:var(--dpd); }
 
-        /* === Forms === */
-        .form-section, .table-section, .summary-section, .cat-summary-section { padding: 28px 32px; margin-bottom: 24px; overflow: hidden; }
-        .section-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        .section-title i { color: var(--gold); font-size: 16px; }
-        .form-grid { display: grid; gap: 14px; margin-bottom: 14px; }
-        .form-row-3 { grid-template-columns: 1fr 1fr 1fr; }
-        .form-row-2 { grid-template-columns: 1fr 1fr; }
-        .form-row-1 { grid-template-columns: 1fr; }
-        .form-group { display: flex; flex-direction: column; gap: 6px; }
-        .form-group label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
-        .form-group input, .form-group select, .form-group textarea {
-            background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 215, 0, 0.1);
-            border-radius: var(--radius-sm); padding: 12px 14px; font-family: var(--font);
-            font-size: 14px; font-weight: 500; color: var(--text-primary); outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease; width: 100%;
-            resize: none;
-        }
-        .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-muted); font-weight: 400; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
-        .form-group select option { background: var(--deep-purple-dark); color: var(--text-primary); }
-        .form-group input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.7) sepia(1) saturate(3) hue-rotate(10deg); cursor: pointer; }
+        /* === Sections === */
+        .sec { padding:22px 18px; margin-bottom:16px; overflow:hidden; }
+        .sec-t { font-size:16px; font-weight:700; color:var(--t1); margin-bottom:16px; display:flex; align-items:center; gap:9px; }
+        .sec-t i { color:var(--gold); font-size:14px; }
 
-        .timestamp-display {
-            background: rgba(0,0,0,0.35); border: 1px solid rgba(255,215,0,0.1); border-radius: var(--radius-sm);
-            padding: 12px 14px; font-size: 13px; color: var(--text-muted); display: flex; align-items: center;
-            gap: 8px; height: 46px;
+        /* === Category Management === */
+        .cat-mgmt { margin-bottom:16px; }
+        .cat-add-row { display:flex; gap:8px; margin-bottom:14px; }
+        .cat-add-row input {
+            flex:1; background:rgba(0,0,0,.35); border:1px solid rgba(255,215,0,.08);
+            border-radius:var(--rs); padding:11px 13px; font-family:var(--f); font-size:13px;
+            font-weight:500; color:var(--t1); outline:none; transition:border-color .3s,box-shadow .3s;
         }
-        .timestamp-display i { color: var(--gold); font-size: 12px; flex-shrink: 0; }
+        .cat-add-row input:focus { border-color:var(--gold); box-shadow:0 0 0 3px var(--gold-dim); }
+        .cat-add-btn {
+            background:var(--gold-dim); border:1px solid rgba(255,215,0,.18); color:var(--gold);
+            border-radius:var(--rs); padding:11px 14px; font-family:var(--f); font-size:13px;
+            font-weight:700; cursor:pointer; white-space:nowrap; transition:all .2s;
+        }
+        .cat-add-btn:hover { background:var(--gold); color:var(--dpd); }
+        .cat-list { display:flex; flex-wrap:wrap; gap:8px; }
+        .cat-chip {
+            display:inline-flex; align-items:center; gap:7px;
+            padding:7px 14px; border-radius:20px; font-size:12px; font-weight:600;
+            border:1px solid rgba(255,215,0,.08); transition:all .25s;
+        }
+        .cat-chip .cat-del {
+            width:20px;height:20px;border-radius:50%;background:var(--red-d);
+            border:none;color:var(--red);font-size:9px;cursor:pointer;
+            display:flex;align-items:center;justify-content:center;transition:all .2s;
+        }
+        .cat-chip .cat-del:hover { background:var(--red); color:#fff; transform:scale(1.15); }
 
-        .presets-wrap { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
-        .preset-btn {
-            background: rgba(0,0,0,0.3); border: 1px solid rgba(255,215,0,0.1); color: var(--text-secondary);
-            border-radius: 8px; padding: 6px 14px; font-family: var(--font); font-size: 13px; font-weight: 600;
-            cursor: pointer; transition: all 0.2s ease;
+        /* === Form === */
+        .fg { display:flex; flex-direction:column; gap:5px; margin-bottom:12px; }
+        .fg label { font-size:12px; font-weight:600; color:var(--t2); }
+        .fg input, .fg select, .fg textarea {
+            background:rgba(0,0,0,.35); border:1px solid rgba(255,215,0,.08);
+            border-radius:var(--rs); padding:12px 13px; font-family:var(--f);
+            font-size:14px; font-weight:500; color:var(--t1); outline:none;
+            transition:border-color .3s,box-shadow .3s; width:100%; resize:none;
         }
-        .preset-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
-        .cat-input-wrap { display: flex; gap: 8px; margin-bottom: 14px; }
-        .cat-input-wrap input {
-            flex: 1; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,215,0,0.1); border-radius: var(--radius-sm);
-            padding: 10px 14px; font-family: var(--font); font-size: 13px; font-weight: 500; color: var(--text-primary);
-            outline: none; transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        .fg input::placeholder, .fg textarea::placeholder { color:var(--t3); font-weight:400; }
+        .fg input:focus, .fg select:focus, .fg textarea:focus { border-color:var(--gold); box-shadow:0 0 0 3px var(--gold-dim); }
+        .fg select option { background:var(--dpd); color:var(--t1); }
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        .form-row-single { grid-template-columns:1fr; }
+        .ts-box {
+            background:rgba(0,0,0,.35); border:1px solid rgba(255,215,0,.08); border-radius:var(--rs);
+            padding:12px 13px; font-size:13px; color:var(--t3); display:flex; align-items:center;
+            gap:8px; min-height:46px;
         }
-        .cat-input-wrap input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
-        .btn-add-cat {
-            background: var(--gold-dim); border: 1px solid rgba(255,215,0,0.2); color: var(--gold);
-            border-radius: var(--radius-sm); padding: 10px 16px; font-family: var(--font); font-size: 13px;
-            font-weight: 700; cursor: pointer; white-space: nowrap; transition: all 0.25s ease;
+        .ts-box i { color:var(--gold); font-size:11px; flex-shrink:0; }
+        .presets { display:flex; gap:6px; margin-bottom:12px; flex-wrap:wrap; }
+        .pre-btn {
+            background:rgba(0,0,0,.3); border:1px solid rgba(255,215,0,.08); color:var(--t2);
+            border-radius:var(--rss); padding:7px 12px; font-family:var(--f); font-size:12px; font-weight:600;
+            cursor:pointer; transition:all .2s;
         }
-        .btn-add-cat:hover { background: var(--gold); color: var(--deep-purple-dark); }
-        .btn-submit {
-            width: 100%; padding: 14px;
-            background: linear-gradient(135deg, var(--gold), #e6c200);
-            color: var(--deep-purple-dark); border: none; border-radius: var(--radius-sm);
-            font-family: var(--font); font-size: 15px; font-weight: 700; cursor: pointer;
-            transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px;
-            position: relative; overflow: hidden;
+        .pre-btn:hover, .pre-btn:active { border-color:var(--gold); color:var(--gold); background:var(--gold-dim); }
+        .btn-sub {
+            width:100%; padding:14px;
+            background:linear-gradient(135deg,var(--gold),#e6c200);
+            color:var(--dpd); border:none; border-radius:var(--rs);
+            font-family:var(--f); font-size:15px; font-weight:800; cursor:pointer;
+            transition:all .3s; display:flex; align-items:center; justify-content:center; gap:8px;
+            position:relative; overflow:hidden; margin-top:4px;
         }
-        .btn-submit::before {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%);
-            transform: translateX(-100%); transition: transform 0.6s ease;
+        .btn-sub::before {
+            content:''; position:absolute; inset:0;
+            background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.25) 50%,transparent 70%);
+            transform:translateX(-100%); transition:transform .6s;
         }
-        .btn-submit:hover::before { transform: translateX(100%); }
-        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3); }
-        .btn-submit:active { transform: translateY(0); }
+        .btn-sub:hover::before { transform:translateX(100%); }
+        .btn-sub:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(255,215,0,.3); }
+        .btn-sub:active { transform:translateY(0); }
 
         /* === Table === */
-        .table-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
-        .table-count { font-size: 13px; color: var(--text-muted); background: rgba(0,0,0,0.25); padding: 4px 12px; border-radius: 20px; font-weight: 500; }
-        .table-wrapper { overflow-x: auto; border-radius: var(--radius-sm); border: 1px solid rgba(255, 215, 0, 0.06); }
-        table { width: 100%; border-collapse: collapse; min-width: 680px; }
-        thead th { background: rgba(0, 0, 0, 0.4); padding: 13px 14px; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; text-align: right; white-space: nowrap; }
-        thead th:first-child { border-radius: 0 var(--radius-sm) 0 0; }
-        thead th:last-child { border-radius: var(--radius-sm) 0 0 0; text-align: center; }
-        tbody tr { border-bottom: 1px solid rgba(255, 215, 0, 0.04); transition: background 0.2s ease; animation: rowIn 0.4s ease backwards; }
-        tbody tr:hover { background: rgba(255, 215, 0, 0.03); }
-        tbody td { padding: 13px 14px; font-size: 14px; font-weight: 500; color: var(--text-primary); vertical-align: middle; }
-        tbody td:last-child { text-align: center; }
-        .cat-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
-        .cat-c0 { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-        .cat-c1 { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-        .cat-c2 { background: rgba(251, 146, 60, 0.15); color: #fb923c; }
-        .cat-c3 { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
-        .cat-c4 { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
-        .cat-c5 { background: rgba(20, 184, 166, 0.15); color: #2dd4bf; }
-        .cat-c6 { background: rgba(234, 179, 8, 0.15); color: #facc15; }
-        .cat-c7 { background: rgba(239, 68, 68, 0.15); color: #f87171; }
-        .amount-cell { font-weight: 700; color: var(--danger); font-variant-numeric: tabular-nums; white-space: nowrap; }
-        .date-cell { color: var(--text-secondary); font-size: 12px; font-variant-numeric: tabular-nums; direction: ltr; text-align: right; white-space: nowrap; }
-        .notes-cell {
-            color: var(--text-secondary); font-size: 13px; max-width: 200px; overflow: hidden;
-            text-overflow: ellipsis; white-space: nowrap; font-weight: 400;
+        .tbl-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:8px; }
+        .tbl-cnt { font-size:12px; color:var(--t3); background:rgba(0,0,0,.25); padding:3px 10px; border-radius:16px; font-weight:500; }
+        .tbl-wrap { overflow-x:auto; border-radius:var(--rs); border:1px solid rgba(255,215,0,.05); -webkit-overflow-scrolling:touch; }
+        table { width:100%; border-collapse:collapse; min-width:600px; }
+        thead th {
+            background:rgba(0,0,0,.4); padding:11px 12px; font-size:10px; font-weight:700;
+            color:var(--t3); text-transform:uppercase; letter-spacing:.5px; text-align:right; white-space:nowrap;
         }
-        .notes-cell.has-note { color: var(--text-primary); font-weight: 500; }
-        .notes-tooltip-wrap { position: relative; }
-        .notes-full {
-            display: none; position: absolute; bottom: calc(100% + 8px); right: 0;
-            background: var(--deep-purple-dark); border: 1px solid var(--card-hover-border);
-            border-radius: var(--radius-sm); padding: 12px 16px; min-width: 220px; max-width: 320px;
-            font-size: 13px; color: var(--text-primary); line-height: 1.7; white-space: normal;
-            z-index: 100; box-shadow: 0 12px 40px rgba(0,0,0,0.6); word-break: break-word;
+        thead th:first-child { border-radius:0 var(--rs) 0 0; }
+        thead th:last-child { border-radius:var(--rs) 0 0 0; text-align:center; }
+        tbody tr { border-bottom:1px solid rgba(255,215,0,.03); transition:background .2s; animation:rIn .35s ease backwards; }
+        tbody tr:hover { background:rgba(255,215,0,.025); }
+        tbody td { padding:12px; font-size:13px; font-weight:500; color:var(--t1); vertical-align:middle; }
+        tbody td:last-child { text-align:center; }
+        .badge { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:16px; font-size:11px; font-weight:600; white-space:nowrap; }
+        .amt-cell { font-weight:700; color:var(--red); font-variant-numeric:tabular-nums; white-space:nowrap; }
+        .dt-cell { color:var(--t2); font-size:11px; font-variant-numeric:tabular-nums; direction:ltr; text-align:right; white-space:nowrap; }
+        .note-cell { color:var(--t2); font-size:12px; max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:400; }
+        .note-cell.has { color:var(--t1); font-weight:500; }
+        .ntw { position:relative; }
+        .ntf {
+            display:none; position:absolute; bottom:calc(100% + 8px); right:0;
+            background:var(--dpd); border:1px solid var(--card-bh);
+            border-radius:var(--rs); padding:10px 14px; min-width:200px; max-width:280px;
+            font-size:12px; color:var(--t1); line-height:1.7; white-space:normal;
+            z-index:100; box-shadow:0 10px 35px rgba(0,0,0,.6); word-break:break-word;
         }
-        .notes-full::after {
-            content: ''; position: absolute; top: 100%; right: 20px;
-            border: 6px solid transparent; border-top-color: var(--card-hover-border);
+        .ntf::after { content:''; position:absolute; top:100%; right:16px; border:5px solid transparent; border-top-color:var(--card-bh); }
+        .ntw:hover .ntf { display:block; }
+        .btn-del {
+            background:var(--red-d); border:1px solid rgba(255,77,106,.15); color:var(--red);
+            width:32px; height:32px; border-radius:7px; cursor:pointer; font-size:12px;
+            display:inline-flex; align-items:center; justify-content:center; transition:all .2s;
         }
-        .notes-tooltip-wrap:hover .notes-full { display: block; }
-        .btn-delete {
-            background: var(--danger-dim); border: 1px solid rgba(255, 77, 106, 0.2); color: var(--danger);
-            width: 34px; height: 34px; border-radius: 8px; cursor: pointer; font-size: 13px;
-            display: inline-flex; align-items: center; justify-content: center; transition: all 0.25s ease;
-        }
-        .btn-delete:hover { background: var(--danger); color: #fff; transform: scale(1.1); box-shadow: 0 4px 15px rgba(255, 77, 106, 0.35); }
-        @keyframes rowIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-        .empty-state { text-align: center; padding: 48px 20px; }
-        .empty-icon { font-size: 48px; color: var(--text-muted); margin-bottom: 14px; opacity: 0.4; }
-        .empty-text { font-size: 15px; color: var(--text-muted); font-weight: 500; }
+        .btn-del:hover { background:var(--red); color:#fff; transform:scale(1.1); box-shadow:0 4px 12px rgba(255,77,106,.3); }
+        @keyframes rIn { from{opacity:0;transform:translateX(16px)} to{opacity:1;transform:translateX(0)} }
+        .empty { text-align:center; padding:36px 16px; }
+        .empty-ico { font-size:40px; color:var(--t3); margin-bottom:10px; opacity:.35; }
+        .empty-txt { font-size:14px; color:var(--t3); font-weight:500; }
 
-        /* === Category Summary === */
-        .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-        .cat-sum-card {
-            background: rgba(0,0,0,0.25); border: 1px solid rgba(255,215,0,0.06); border-radius: var(--radius-sm);
-            padding: 16px; display: flex; align-items: center; gap: 14px; transition: border-color 0.3s ease;
+        /* === Cat Summary === */
+        .csg { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px; }
+        .csc {
+            background:rgba(0,0,0,.22); border:1px solid rgba(255,215,0,.05); border-radius:var(--rs);
+            padding:14px; display:flex; align-items:center; gap:12px; transition:border-color .3s;
         }
-        .cat-sum-card:hover { border-color: var(--card-hover-border); }
-        .cat-sum-icon { font-size: 18px; }
-        .cat-sum-label { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
-        .cat-sum-val { font-size: 17px; font-weight: 800; color: var(--text-primary); margin-top: 2px; }
-        .empty-cat-sum { text-align: center; padding: 20px; color: var(--text-muted); font-size: 14px; }
+        .csc:hover { border-color:var(--card-bh); }
+        .csc-ico { font-size:16px; }
+        .csc-lbl { font-size:12px; color:var(--t2); font-weight:500; }
+        .csc-val { font-size:16px; font-weight:800; color:var(--t1); margin-top:2px; }
+        .empty-cs { text-align:center; padding:16px; color:var(--t3); font-size:13px; }
 
-        /* === Summary Section === */
-        .summary-section { position: relative; overflow: hidden; }
-        .summary-section::before {
-            content: ''; position: absolute; top: -50%; left: -20%; width: 140%; height: 200%;
-            background: radial-gradient(ellipse at center, var(--gold-dim) 0%, transparent 60%); pointer-events: none;
+        /* === Summary === */
+        .sum-sec { position:relative; overflow:hidden; }
+        .sum-sec::before { content:''; position:absolute; top:-50%; left:-20%; width:140%; height:200%; background:radial-gradient(ellipse at center,var(--gold-dim),transparent 60%); pointer-events:none; }
+        .sum-c { position:relative; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+        .sum-r { display:flex; align-items:center; gap:10px; }
+        .sum-ico { width:44px;height:44px;background:var(--gold-dim);border:1px solid rgba(255,215,0,.18);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:18px; }
+        .sum-lbl { font-size:13px; font-weight:600; color:var(--t2); }
+        .sum-mo { font-size:11px; color:var(--t3); font-weight:500; }
+        .sum-amt { font-size:26px; font-weight:800; color:var(--gold); letter-spacing:-.5px; font-variant-numeric:tabular-nums; }
+        .sum-u { font-size:13px; font-weight:600; color:var(--t3); }
+
+        /* === Footer === */
+        .ftr {
+            position:fixed; bottom:0; left:0; right:0; z-index:50;
+            background:rgba(18,8,32,0.92); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+            border-top:1px solid var(--card-b);
+            padding:12px 20px; padding-bottom:calc(12px + var(--safe-b));
+            display:flex; align-items:center; justify-content:center; gap:20px; flex-wrap:wrap;
         }
-        .summary-content { position: relative; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-        .summary-right { display: flex; align-items: center; gap: 12px; }
-        .summary-icon { width: 50px; height: 50px; background: var(--gold-dim); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 20px; }
-        .summary-label { font-size: 14px; font-weight: 600; color: var(--text-secondary); }
-        .summary-month { font-size: 12px; color: var(--text-muted); font-weight: 500; }
-        .summary-amount { font-size: 30px; font-weight: 800; color: var(--gold); letter-spacing: -0.5px; font-variant-numeric: tabular-nums; }
-        .summary-amount-unit { font-size: 14px; font-weight: 600; color: var(--text-muted); }
+        .ftr-item { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--t2); font-weight:500; }
+        .ftr-item i { color:var(--gold); font-size:12px; }
+        .ftr-sep { width:1px; height:16px; background:var(--card-b); }
 
         /* === Toast === */
-        .toast-container { position: fixed; top: 24px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+        .toast-c { position:fixed; top:16px; left:50%; transform:translateX(-50%); z-index:9999; display:flex; flex-direction:column; gap:8px; pointer-events:none; width:calc(100% - 28px); max-width:400px; }
         .toast {
-            background: rgba(30, 10, 50, 0.92); backdrop-filter: blur(20px); border: 1px solid var(--card-border);
-            border-radius: 12px; padding: 14px 22px; font-family: var(--font); font-size: 14px; font-weight: 600;
-            color: var(--text-primary); display: flex; align-items: center; gap: 10px; pointer-events: auto;
-            animation: toastIn 0.4s ease, toastOut 0.4s ease 2.4s forwards; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5); white-space: nowrap;
+            background:rgba(26,10,44,0.94); backdrop-filter:blur(18px); border:1px solid var(--card-b);
+            border-radius:12px; padding:12px 18px; font-family:var(--f); font-size:13px; font-weight:600;
+            color:var(--t1); display:flex; align-items:center; gap:9px; pointer-events:auto;
+            animation:tIn .35s ease, tOut .35s ease 2.3s forwards; box-shadow:0 10px 35px rgba(0,0,0,.5);
+            white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
         }
-        .toast.success { border-color: rgba(52, 211, 153, 0.3); }
-        .toast.success i { color: var(--success); }
-        .toast.error { border-color: rgba(255, 77, 106, 0.3); }
-        .toast.error i { color: var(--danger); }
-        @keyframes toastIn { from { opacity: 0; transform: translateY(-20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @keyframes toastOut { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(-20px) scale(0.95); } }
-        .value-pop { animation: pop 0.4s ease; }
-        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        .toast.ok { border-color:rgba(52,211,153,.25); }
+        .toast.ok i { color:var(--grn); }
+        .toast.er { border-color:rgba(255,77,106,.25); }
+        .toast.er i { color:var(--red); }
+        @keyframes tIn { from{opacity:0;transform:translateY(-16px) scale(.96)} to{opacity:1;transform:translateY(0) scale(1)} }
+        @keyframes tOut { from{opacity:1;transform:translateY(0) scale(1)} to{opacity:0;transform:translateY(-16px) scale(.96)} }
+        .vpop { animation:vp .35s ease; }
+        @keyframes vp { 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
 
         /* === Modal === */
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(6px);
-            z-index: 8000; display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        .mdl-ov {
+            position:fixed; inset:0; background:rgba(0,0,0,.55); backdrop-filter:blur(5px);
+            z-index:8000; display:flex; align-items:center; justify-content:center;
+            opacity:0; pointer-events:none; transition:opacity .25s;
         }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-box {
-            background: var(--deep-purple-dark); border: 1px solid var(--card-border);
-            border-radius: var(--radius); padding: 32px; max-width: 380px; width: 90%;
-            text-align: center; transform: scale(0.9); transition: transform 0.3s ease;
+        .mdl-ov.on { opacity:1; pointer-events:auto; }
+        .mdl-bx {
+            background:var(--dpd); border:1px solid var(--card-b); border-radius:var(--r);
+            padding:28px; max-width:360px; width:90%; text-align:center; transform:scale(.92); transition:transform .25s;
         }
-        .modal-overlay.active .modal-box { transform: scale(1); }
-        .modal-icon { width: 56px; height: 56px; background: var(--danger-dim); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; color: var(--danger); margin-bottom: 16px; }
-        .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-        .modal-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; }
-        .modal-actions { display: flex; gap: 12px; }
-        .modal-actions button { flex: 1; padding: 12px; border-radius: var(--radius-sm); font-family: var(--font); font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.25s ease; border: none; }
-        .btn-cancel { background: rgba(255, 255, 255, 0.06); color: var(--text-secondary); border: 1px solid rgba(255, 255, 255, 0.08) !important; }
-        .btn-cancel:hover { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); }
-        .btn-confirm-delete { background: var(--danger); color: #fff; }
-        .btn-confirm-delete:hover { box-shadow: 0 6px 20px rgba(255, 77, 106, 0.4); transform: translateY(-1px); }
+        .mdl-ov.on .mdl-bx { transform:scale(1); }
+        .mdl-ico { width:50px;height:50px;background:var(--red-d);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:20px;color:var(--red);margin-bottom:14px; }
+        .mdl-t { font-size:17px; font-weight:700; margin-bottom:6px; }
+        .mdl-d { font-size:13px; color:var(--t2); margin-bottom:20px; line-height:1.6; }
+        .mdl-acts { display:flex; gap:10px; }
+        .mdl-acts button { flex:1; padding:11px; border-radius:var(--rs); font-family:var(--f); font-size:13px; font-weight:700; cursor:pointer; transition:all .2s; border:none; }
+        .mdl-can { background:rgba(255,255,255,.05); color:var(--t2); border:1px solid rgba(255,255,255,.06)!important; }
+        .mdl-can:hover { background:rgba(255,255,255,.08); color:var(--t1); }
+        .mdl-cfm { background:var(--red); color:#fff; }
+        .mdl-cfm:hover { box-shadow:0 5px 18px rgba(255,77,106,.35); transform:translateY(-1px); }
+
+        /* === Cat delete confirm modal === */
+        .cat-mdl-ico { background:var(--gold-dim); color:var(--gold); }
 
         /* === Responsive === */
-        @media (max-width: 700px) {
-            .stats-grid { grid-template-columns: 1fr; gap: 12px; }
-            .stat-card { display: flex; align-items: center; gap: 16px; text-align: right; padding: 18px 20px; }
-            .stat-icon { margin-bottom: 0; }
-            .stat-value { font-size: 20px; }
-            .form-row-3 { grid-template-columns: 1fr; }
-            .form-row-2 { grid-template-columns: 1fr; }
-            .header { padding: 24px 20px; }
-            .header-welcome { font-size: 22px; }
-            .form-section, .table-section, .summary-section, .cat-summary-section { padding: 22px 18px; }
-            .summary-content { flex-direction: column; align-items: flex-start; }
-            .summary-amount { font-size: 26px; }
-            .cat-grid { grid-template-columns: 1fr; }
+        @media (max-width:600px) {
+            .stats { grid-template-columns:1fr; gap:8px; }
+            .st { display:flex; align-items:center; gap:14px; text-align:right; padding:14px 16px; }
+            .st-ico { margin-bottom:0; }
+            .st-val { font-size:17px; }
+            .form-row { grid-template-columns:1fr; }
+            .hdr { padding:20px 16px; }
+            .hdr-title { font-size:20px; }
+            .sec { padding:18px 14px; }
+            .csg { grid-template-columns:1fr 1fr; }
+            .sum-amt { font-size:22px; }
         }
-        @media (max-width: 500px) { .app-container { padding: 16px 12px 40px; } .header-welcome { font-size: 20px; } }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.15); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 215, 0, 0.3); }
-        :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
+        @media (max-width:380px) {
+            .app { padding:14px 10px 24px; }
+            .hdr-title { font-size:18px; }
+            .csg { grid-template-columns:1fr; }
+            .ftr { gap:10px; padding:10px 14px; padding-bottom:calc(10px + var(--safe-b)); }
+            .ftr-item { font-size:11px; }
+        }
+        ::-webkit-scrollbar { width:5px; height:5px; }
+        ::-webkit-scrollbar-track { background:transparent; }
+        ::-webkit-scrollbar-thumb { background:rgba(255,215,0,.12); border-radius:10px; }
+        :focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+        @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
     </style>
 </head>
 <body>
 
-    <div class="bg-layer" aria-hidden="true"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
-    <div class="noise" aria-hidden="true"></div>
+<div class="bg-fx" aria-hidden="true"><div class="orb o1"></div><div class="orb o2"></div></div>
+<div class="noise" aria-hidden="true"></div>
 
-    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+<div class="toast-c" id="toastC" aria-live="polite"></div>
 
-    <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <div class="modal-box">
-            <div class="modal-icon"><i class="fas fa-trash-alt"></i></div>
-            <h3 class="modal-title" id="modalTitle">دڵنیای لە سڕینەوە؟</h3>
-            <p class="modal-desc">ئەم تۆمارە لە لیستەکە دەسڕدرێتەوە و ناگەڕێتەوە.</p>
-            <div class="modal-actions">
-                <button class="btn-cancel" id="btnCancelDelete" type="button">نەخێر</button>
-                <button class="btn-confirm-delete" id="btnConfirmDelete" type="button">بەڵێ، بیسڕەوە</button>
-            </div>
+<!-- مۆداڵی سڕینەوەی خەرجی -->
+<div class="mdl-ov" id="delMdl" role="dialog" aria-modal="true">
+    <div class="mdl-bx">
+        <div class="mdl-ico"><i class="fas fa-trash-alt"></i></div>
+        <h3 class="mdl-t">دڵنیای لە سڕینەوە؟</h3>
+        <p class="mdl-d">ئەم تۆمارە لە لیستەکە دەسڕدرێتەوە و ناگەڕێتەوە.</p>
+        <div class="mdl-acts">
+            <button class="mdl-can" id="delNo" type="button">نەخێر</button>
+            <button class="mdl-cfm" id="delYes" type="button">بەڵێ، بیسڕەوە</button>
         </div>
     </div>
+</div>
 
-    <main class="app-container">
+<!-- مۆداڵی سڕینەوەی جۆر -->
+<div class="mdl-ov" id="catDelMdl" role="dialog" aria-modal="true">
+    <div class="mdl-bx">
+        <div class="mdl-ico cat-mdl-ico"><i class="fas fa-folder-minus"></i></div>
+        <h3 class="mdl-t" id="catDelTitle">سڕینەوەی جۆر</h3>
+        <p class="mdl-d" id="catDelDesc">ئەم جۆرە سڕدرێتەوە.</p>
+        <div class="mdl-acts">
+            <button class="mdl-can" id="catDelNo" type="button">نەخێر</button>
+            <button class="mdl-cfm" id="catDelYes" type="button">بەڵێ، بیسڕەوە</button>
+        </div>
+    </div>
+</div>
 
-        <header class="glass header">
-            <div class="header-top">
-                <div class="header-icon"><i class="fas fa-wallet"></i></div>
-                <div class="header-date" id="headerDate"></div>
+<main class="app">
+
+    <header class="glass hdr">
+        <div class="hdr-row">
+            <div class="hdr-ico"><i class="fas fa-wallet"></i></div>
+            <div class="hdr-date" id="hdrDate"></div>
+        </div>
+        <h1 class="hdr-title">بەخێربێیت بۆ <span>بەڕێوەبەری دارایی</span></h1>
+    </header>
+
+    <section class="stats" aria-label="ئامارە داراییەکان">
+        <div class="glass st sal">
+            <div class="st-ico"><i class="fas fa-coins"></i></div>
+            <div>
+                <div class="st-lbl">کۆی مووچە</div>
+                <div class="st-val" id="stSal">0</div>
+                <div class="st-unit">دینار</div>
+                <div class="sal-edit">
+                    <input type="number" class="sal-inp" id="salInp" placeholder="بڕ..." min="0" inputmode="numeric">
+                    <button class="sal-btn" id="salBtn" type="button">نوێکردنەوە</button>
+                </div>
             </div>
-            <h1 class="header-welcome">بەخێربێیت بۆ <span>بەڕێوەبەری دارایی</span></h1>
-        </header>
+        </div>
+        <div class="glass st exp">
+            <div class="st-ico"><i class="fas fa-arrow-trend-down"></i></div>
+            <div>
+                <div class="st-lbl">کۆی خەرجی</div>
+                <div class="st-val" id="stExp">0</div>
+                <div class="st-unit">دینار</div>
+            </div>
+        </div>
+        <div class="glass st bal">
+            <div class="st-ico"><i class="fas fa-piggy-bank"></i></div>
+            <div>
+                <div class="st-lbl">ماوە</div>
+                <div class="st-val" id="stBal">0</div>
+                <div class="st-unit">دینار</div>
+            </div>
+        </div>
+    </section>
 
-        <section class="stats-grid" aria-label="ئامارە داراییەکان">
-            <div class="glass stat-card salary">
-                <div class="stat-icon"><i class="fas fa-coins"></i></div>
+    <!-- بەڕێوەبردنی جۆرەکان -->
+    <section class="glass sec cat-mgmt" aria-label="بەڕێوەبردنی جۆرەکان">
+        <h2 class="sec-t"><i class="fas fa-tags"></i> بەڕێوەبردنی جۆرەکان</h2>
+        <div class="cat-add-row">
+            <input type="text" id="catInp" placeholder="جۆری نوێ بنووسە..." maxlength="30">
+            <button class="cat-add-btn" id="catAddBtn" type="button"><i class="fas fa-plus"></i> زیادکردن</button>
+        </div>
+        <div class="cat-list" id="catList"></div>
+    </section>
+
+    <!-- فۆرمی زیادکردنی خەرجی -->
+    <section class="glass sec" aria-label="زیادکردنی خەرجی">
+        <h2 class="sec-t"><i class="fas fa-plus-circle"></i> زیادکردنی خەرجی</h2>
+
+        <div style="margin-bottom:12px;">
+            <label style="font-size:12px;font-weight:600;color:var(--t2);display:block;margin-bottom:6px;">بەخێرا هەڵبژێرە</label>
+            <div class="presets" id="preWrap">
+                <button class="pre-btn" type="button" data-v="250">250</button>
+                <button class="pre-btn" type="button" data-v="500">500</button>
+                <button class="pre-btn" type="button" data-v="1000">1,000</button>
+                <button class="pre-btn" type="button" data-v="5000">5,000</button>
+                <button class="pre-btn" type="button" data-v="10000">10,000</button>
+                <button class="pre-btn" type="button" data-v="25000">25,000</button>
+                <button class="pre-btn" type="button" data-v="50000">50,000</button>
+            </div>
+        </div>
+
+        <form id="expForm" autocomplete="off">
+            <div class="form-row">
+                <div class="fg">
+                    <label for="inpAmt">بڕی پارە</label>
+                    <input type="number" id="inpAmt" placeholder="بڕ بنووسە..." min="1" step="1" inputmode="numeric" required>
+                </div>
+                <div class="fg">
+                    <label for="inpCat">جۆر</label>
+                    <select id="inpCat" required>
+                        <option value="" disabled selected>جۆر هەڵبژێرە</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="fg">
+                    <label>بەروار و کات</label>
+                    <div class="ts-box"><i class="fas fa-clock"></i><span id="tsDisp">---</span></div>
+                </div>
+                <div class="fg">
+                    <label for="inpNotes"><i class="fas fa-pen-nib" style="color:var(--gold);font-size:10px;margin-left:3px;"></i> تێبینی / ملاحضە</label>
+                    <input type="text" id="inpNotes" placeholder="وردەکاری خەرجییەکە..." maxlength="200">
+                </div>
+            </div>
+            <button type="submit" class="btn-sub"><i class="fas fa-check"></i> تۆمارکردن</button>
+        </form>
+    </section>
+
+    <!-- خشتەی خەرجیەکان -->
+    <section class="glass sec" aria-label="لیستی خەرجیەکان">
+        <div class="tbl-hdr">
+            <h2 class="sec-t" style="margin-bottom:0"><i class="fas fa-list-ul"></i> لیستی خەرجیەکان</h2>
+            <span class="tbl-cnt" id="tblCnt">0 تۆمار</span>
+        </div>
+        <div class="tbl-wrap">
+            <table role="table">
+                <thead>
+                    <tr>
+                        <th>جۆر</th>
+                        <th>بڕ</th>
+                        <th>تێبینی</th>
+                        <th>بەروار و کات</th>
+                        <th>سڕینەوە</th>
+                    </tr>
+                </thead>
+                <tbody id="tBody"></tbody>
+            </table>
+            <div class="empty" id="emptyS">
+                <div class="empty-ico"><i class="fas fa-receipt"></i></div>
+                <div class="empty-txt">هیچ خەرجییەک تۆمار نەکراوە</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- پوختەی جۆرەکان -->
+    <section class="glass sec" aria-label="پوختەی جۆرەکان">
+        <h2 class="sec-t"><i class="fas fa-chart-pie"></i> پوختەی خەرجی مانگی ئێستا بەپێی جۆر</h2>
+        <div id="catSumC"></div>
+    </section>
+
+    <!-- کۆی مانگانە -->
+    <section class="glass sec sum-sec" aria-label="کۆی مانگانە">
+        <div class="sum-c">
+            <div class="sum-r">
+                <div class="sum-ico"><i class="fas fa-calendar-check"></i></div>
                 <div>
-                    <div class="stat-label">کۆی مووچە</div>
-                    <div class="stat-value" id="statSalary">0</div>
-                    <div class="stat-unit">دینار</div>
-                    <div class="salary-edit-wrap">
-                        <input type="number" class="salary-input" id="salaryInput" placeholder="بڕ..." min="0">
-                        <button class="btn-save-salary" id="btnSaveSalary" type="button">نوێکردنەوە</button>
-                    </div>
+                    <div class="sum-lbl">کۆی خەرجی مانگی ئێستا</div>
+                    <div class="sum-mo" id="sumMo"></div>
                 </div>
             </div>
-            <div class="glass stat-card expense">
-                <div class="stat-icon"><i class="fas fa-arrow-trend-down"></i></div>
-                <div>
-                    <div class="stat-label">کۆی خەرجی</div>
-                    <div class="stat-value" id="statExpense">0</div>
-                    <div class="stat-unit">دینار</div>
-                </div>
+            <div style="text-align:left;">
+                <div class="sum-amt" id="sumAmt">0</div>
+                <div class="sum-u">دینار</div>
             </div>
-            <div class="glass stat-card balance">
-                <div class="stat-icon"><i class="fas fa-piggy-bank"></i></div>
-                <div>
-                    <div class="stat-label">ماوە</div>
-                    <div class="stat-value" id="statBalance">0</div>
-                    <div class="stat-unit">دینار</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="glass form-section" aria-label="زیادکردنی خەرجی">
-            <h2 class="section-title"><i class="fas fa-plus-circle"></i> زیادکردنی خەرجی</h2>
-
-            <div style="margin-bottom:14px;">
-                <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:8px;">بەخێرا هەڵبژێرە</label>
-                <div class="presets-wrap" id="presetsWrap">
-                    <button class="preset-btn" type="button" data-val="250">250</button>
-                    <button class="preset-btn" type="button" data-val="500">500</button>
-                    <button class="preset-btn" type="button" data-val="1000">1,000</button>
-                    <button class="preset-btn" type="button" data-val="5000">5,000</button>
-                    <button class="preset-btn" type="button" data-val="10000">10,000</button>
-                    <button class="preset-btn" type="button" data-val="25000">25,000</button>
-                    <button class="preset-btn" type="button" data-val="50000">50,000</button>
-                </div>
-            </div>
-
-            <form id="expenseForm" autocomplete="off">
-                <div class="form-grid form-row-3">
-                    <div class="form-group">
-                        <label for="inputAmount">بڕی پارە</label>
-                        <input type="number" id="inputAmount" placeholder="بڕ بنووسە..." min="1" step="1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputCategory">جۆر</label>
-                        <select id="inputCategory" required>
-                            <option value="" disabled selected>جۆر هەڵبژێرە</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>بەروار و کات</label>
-                        <div class="timestamp-display">
-                            <i class="fas fa-clock"></i>
-                            <span id="autoTimestamp">---</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-grid form-row-1" style="margin-bottom:14px;">
-                    <div class="form-group">
-                        <label for="inputNotes"><i class="fas fa-pen-nib" style="color:var(--gold);font-size:11px;margin-left:4px;"></i> تێبینی / ملاحضە</label>
-                        <input type="text" id="inputNotes" placeholder="وردەکاری خەرجییەکە بنووسە (بۆ نموونە: شەکەر، ئارد، و ڕۆن کڕی)..." maxlength="200">
-                    </div>
-                </div>
-
-                <div class="cat-input-wrap">
-                    <input type="text" id="newCatInput" placeholder="جۆری نوێ بنووسە (بۆ نموونە: سووتەمەنی)..." maxlength="30">
-                    <button class="btn-add-cat" type="button" id="btnAddCat"><i class="fas fa-plus"></i> زیادکردن</button>
-                </div>
-
-                <button type="submit" class="btn-submit">
-                    <i class="fas fa-check"></i> تۆمارکردن
-                </button>
-            </form>
-        </section>
-
-        <section class="glass table-section" aria-label="لیستی خەرجیەکان">
-            <div class="table-header">
-                <h2 class="section-title" style="margin-bottom:0"><i class="fas fa-list-ul"></i> لیستی خەرجیەکان</h2>
-                <span class="table-count" id="tableCount">0 تۆمار</span>
-            </div>
-            <div class="table-wrapper">
-                <table id="expenseTable" role="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">جۆر</th>
-                            <th scope="col">بڕ</th>
-                            <th scope="col">تێبینی</th>
-                            <th scope="col">بەروار و کات</th>
-                            <th scope="col">سڕینەوە</th>
-                        </tr>
-                    </thead>
-                    <tbody id="expenseBody"></tbody>
-                </table>
-                <div class="empty-state" id="emptyState">
-                    <div class="empty-icon"><i class="fas fa-receipt"></i></div>
-                    <div class="empty-text">هیچ خەرجییەک تۆمار نەکراوە</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="glass cat-summary-section" aria-label="پوختەی جۆرەکان">
-            <h2 class="section-title"><i class="fas fa-chart-pie"></i> پوختەی خەرجی مانگی ئێستا بەپێی جۆر</h2>
-            <div id="catSummaryContent"></div>
-        </section>
-
-        <section class="glass summary-section" aria-label="کۆی مانگانە">
-            <div class="summary-content">
-                <div class="summary-right">
-                    <div class="summary-icon"><i class="fas fa-calendar-check"></i></div>
-                    <div>
-                        <div class="summary-label">کۆی خەرجی مانگی ئێستا</div>
-                        <div class="summary-month" id="summaryMonth"></div>
-                    </div>
-                </div>
-                <div style="text-align:left;">
-                    <div class="summary-amount" id="summaryAmount">0</div>
-                    <div class="summary-amount-unit">دینار</div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <script>
-        /* ============================
-           Kurdish (Badini) Utilities
-           ============================ */
-        var kurdishDays = ['یەکشەمبە', 'دووشەمبە', 'سێشەمبە', 'چوارشەمبە', 'پێنجشەمبە', 'هەینی', 'شەمبە'];
-        var kurdishMonths = [
-            'کانوونی دووەم', 'شوبات', 'ئازار', 'نیسان',
-            'ئایار', 'حوزەیران', 'تەمووز', 'ئاب',
-            'ئەیلوول', 'تشرینی یەکەم', 'تشرینی دووەم', 'کانوونی یەکەم'
-        ];
-
-        var catColors = [
-            { bg: 'rgba(59, 130, 246, 0.15)', color: '#60a5fa', icon: 'fa-tag' },
-            { bg: 'rgba(34, 197, 94, 0.15)',  color: '#4ade80', icon: 'fa-tag' },
-            { bg: 'rgba(251, 146, 60, 0.15)', color: '#fb923c', icon: 'fa-tag' },
-            { bg: 'rgba(168, 85, 247, 0.15)', color: '#c084fc', icon: 'fa-tag' },
-            { bg: 'rgba(236, 72, 153, 0.15)', color: '#f472b6', icon: 'fa-tag' },
-            { bg: 'rgba(20, 184, 166, 0.15)', color: '#2dd4bf', icon: 'fa-tag' },
-            { bg: 'rgba(234, 179, 8, 0.15)',  color: '#facc15', icon: 'fa-tag' },
-            { bg: 'rgba(239, 68, 68, 0.15)',  color: '#f87171', icon: 'fa-tag' }
-        ];
-
-        function getCatStyle(index) {
-            return catColors[index % catColors.length];
-        }
-
-        /* ============================
-           Storage Keys
-           ============================ */
-        var EXPENSES_KEY = 'pfm_expenses_v3';
-        var CATEGORIES_KEY = 'pfm_categories_v3';
-        var SALARY_KEY = 'pfm_salary_v3';
-
-        /* ============================
-           Data Management
-           ============================ */
-        function loadData(key, fallback) {
-            try { var d = localStorage.getItem(key); return d ? JSON.parse(d) : fallback; }
-            catch(e) { return fallback; }
-        }
-        function saveData(key, data) { localStorage.setItem(key, JSON.stringify(data)); }
-        function getExpenses() { return loadData(EXPENSES_KEY, []); }
-        function setExpenses(arr) { saveData(EXPENSES_KEY, arr); }
-        function getCategories() { return loadData(CATEGORIES_KEY, []); }
-        function setCategories(arr) { saveData(CATEGORIES_KEY, arr); }
-        function getSalary() { return loadData(SALARY_KEY, 0); }
-        function setSalary(val) { saveData(SALARY_KEY, val); }
-
-        /* ============================
-           Date / Time Formatting
-           ============================ */
-        function getTodayKurdish() {
-            var now = new Date();
-            return 'ئەڤرۆ: ' + kurdishDays[now.getDay()] + '، ' + now.getDate() + ' ' + kurdishMonths[now.getMonth()];
-        }
-
-        function getCurrentMonthName() { return kurdishMonths[new Date().getMonth()]; }
-
-        function formatDateTime(isoStr) {
-            var d = new Date(isoStr);
-            var day = d.getDate();
-            var month = kurdishMonths[d.getMonth()];
-            var year = d.getFullYear();
-            var h = String(d.getHours()).padStart(2, '0');
-            var m = String(d.getMinutes()).padStart(2, '0');
-            var s = String(d.getSeconds()).padStart(2, '0');
-            return day + ' ' + month + ' ' + year + '  |  ' + h + ':' + m + ':' + s;
-        }
-
-        function formatNumber(num) { return num.toLocaleString('en-US'); }
-        function getNowISO() { return new Date().toISOString(); }
-
-        function getNowDisplay() {
-            var d = new Date();
-            return d.getDate() + ' ' + kurdishMonths[d.getMonth()] + ' ' + d.getFullYear() + ' - ' +
-                   String(d.getHours()).padStart(2, '0') + ':' +
-                   String(d.getMinutes()).padStart(2, '0') + ':' +
-                   String(d.getSeconds()).padStart(2, '0');
-        }
-
-        /* ============================
-           Toast
-           ============================ */
-        function showToast(msg, type) {
-            type = type || 'success';
-            var c = document.getElementById('toastContainer');
-            var t = document.createElement('div');
-            t.className = 'toast ' + type;
-            t.innerHTML = '<i class="fas ' + (type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle') + '"></i> ' + msg;
-            c.appendChild(t);
-            setTimeout(function() { if (t.parentNode) t.parentNode.removeChild(t); }, 3000);
-        }
-
-        /* ============================
-           Modal
-           ============================ */
-        var pendingDeleteId = null;
-        var deleteModal = document.getElementById('deleteModal');
-
-        function openDeleteModal(id) { pendingDeleteId = id; deleteModal.classList.add('active'); }
-        function closeDeleteModal() { deleteModal.classList.remove('active'); pendingDeleteId = null; }
-
-        document.getElementById('btnCancelDelete').addEventListener('click', closeDeleteModal);
-        document.getElementById('btnConfirmDelete').addEventListener('click', function() {
-            if (pendingDeleteId !== null) {
-                setExpenses(getExpenses().filter(function(e) { return e.id !== pendingDeleteId; }));
-                closeDeleteModal();
-                renderAll();
-                showToast('خەرجییەکە سڕدرایەوە', 'success');
-            }
-        });
-        deleteModal.addEventListener('click', function(e) { if (e.target === deleteModal) closeDeleteModal(); });
-        document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && deleteModal.classList.contains('active')) closeDeleteModal(); });
-
-        /* ============================
-           Animations
-           ============================ */
-        function animateValue(el) {
-            el.classList.remove('value-pop');
-            void el.offsetWidth;
-            el.classList.add('value-pop');
-        }
-
-        /* ============================
-           Escape HTML to prevent XSS in notes
-           ============================ */
-        function escapeHTML(str) {
-            var div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        /* ============================
-           Render Functions
-           ============================ */
-        function renderStats() {
-            var salary = getSalary();
-            var totalExp = getExpenses().reduce(function(s, e) { return s + e.amount; }, 0);
-            var balance = salary - totalExp;
-
-            var elS = document.getElementById('statSalary');
-            var elE = document.getElementById('statExpense');
-            var elB = document.getElementById('statBalance');
-
-            elS.textContent = formatNumber(salary);
-            elE.textContent = formatNumber(totalExp);
-            elB.textContent = formatNumber(balance);
-            elB.style.color = balance < 0 ? 'var(--danger)' : 'var(--success)';
-
-            animateValue(elE);
-            animateValue(elB);
-            document.getElementById('salaryInput').value = salary > 0 ? salary : '';
-        }
-
-        function renderCategoryDropdown() {
-            var cats = getCategories();
-            var sel = document.getElementById('inputCategory');
-            var currentVal = sel.value;
-            sel.innerHTML = '<option value="" disabled selected>جۆر هەڵبژێرە</option>';
-            cats.forEach(function(cat) {
-                var opt = document.createElement('option');
-                opt.value = cat;
-                opt.textContent = cat;
-                sel.appendChild(opt);
-            });
-            if (currentVal && cats.indexOf(currentVal) !== -1) sel.value = currentVal;
-        }
-
-        function renderTable() {
-            var expenses = getExpenses();
-            var cats = getCategories();
-            var tbody = document.getElementById('expenseBody');
-            var empty = document.getElementById('emptyState');
-            var count = document.getElementById('tableCount');
-
-            tbody.innerHTML = '';
-
-            if (expenses.length === 0) {
-                empty.style.display = 'block';
-                count.textContent = '0 تۆمار';
-                return;
-            }
-
-            empty.style.display = 'none';
-            count.textContent = expenses.length + ' تۆمار';
-
-            expenses.forEach(function(exp, idx) {
-                var catIndex = cats.indexOf(exp.category);
-                if (catIndex === -1) catIndex = 0;
-                var style = getCatStyle(catIndex);
-
-                // تێبینی: پیشاندانی truncated text بە tooltip بۆ دەقی تەواو
-                var notesHTML = '';
-                var noteText = (exp.notes || '').trim();
-                if (noteText.length > 0) {
-                    var escaped = escapeHTML(noteText);
-                    var truncated = noteText.length > 30 ? escapeHTML(noteText.substring(0, 30)) + '...' : escaped;
-                    if (noteText.length > 30) {
-                        notesHTML =
-                            '<div class="notes-tooltip-wrap">' +
-                                '<span class="notes-cell has-note">' + truncated + '</span>' +
-                                '<div class="notes-full">' +
-                                    '<div style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:6px;">تێبینی</div>' +
-                                    escaped +
-                                '</div>' +
-                            '</div>';
-                    } else {
-                        notesHTML = '<span class="notes-cell has-note">' + escaped + '</span>';
-                    }
-                } else {
-                    notesHTML = '<span class="notes-cell" style="opacity:0.35;">---</span>';
-                }
-
-                var tr = document.createElement('tr');
-                tr.style.animationDelay = (idx * 0.03) + 's';
-
-                tr.innerHTML =
-                    '<td>' +
-                        '<span class="cat-badge ' + ('cat-c' + catIndex) + '" style="background:' + style.bg + ';color:' + style.color + ';">' +
-                            '<i class="fas ' + style.icon + '"></i> ' + escapeHTML(exp.category) +
-                        '</span>' +
-                    '</td>' +
-                    '<td class="amount-cell">' + formatNumber(exp.amount) + ' دینار</td>' +
-                    '<td>' + notesHTML + '</td>' +
-                    '<td class="date-cell">' + formatDateTime(exp.timestamp) + '</td>' +
-                    '<td>' +
-                        '<button class="btn-delete" data-id="' + exp.id + '" aria-label="سڕینەوە" title="سڕینەوە">' +
-                            '<i class="fas fa-trash-alt"></i>' +
-                        '</button>' +
-                    '</td>';
-
-                tbody.appendChild(tr);
-            });
-
-            tbody.onclick = function(e) {
-                var btn = e.target.closest('.btn-delete');
-                if (btn) openDeleteModal(parseInt(btn.getAttribute('data-id'), 10));
-            };
-        }
-
-        function renderCategorySummary() {
-            var expenses = getExpenses();
-            var cats = getCategories();
-            var container = document.getElementById('catSummaryContent');
-            var now = new Date();
-            var curYear = now.getFullYear();
-            var curMonth = now.getMonth();
-
-            var monthlyExps = expenses.filter(function(e) {
-                var d = new Date(e.timestamp);
-                return d.getFullYear() === curYear && d.getMonth() === curMonth;
-            });
-
-            if (monthlyExps.length === 0 || cats.length === 0) {
-                container.innerHTML = '<div class="empty-cat-sum"><i class="fas fa-inbox" style="font-size:28px;display:block;margin-bottom:10px;opacity:0.4;"></i>هیچ خەرجییەک لەم مانگەدا نییە</div>';
-                return;
-            }
-
-            var sums = {};
-            monthlyExps.forEach(function(e) {
-                if (!sums[e.category]) sums[e.category] = 0;
-                sums[e.category] += e.amount;
-            });
-
-            var sorted = Object.keys(sums).sort(function(a, b) { return sums[b] - sums[a]; });
-
-            var html = '<div class="cat-grid">';
-            sorted.forEach(function(catName) {
-                var catIndex = cats.indexOf(catName);
-                if (catIndex === -1) catIndex = 0;
-                var style = getCatStyle(catIndex);
-                html +=
-                    '<div class="cat-sum-card">' +
-                        '<div class="cat-sum-icon" style="color:' + style.color + ';"><i class="fas ' + style.icon + '"></i></div>' +
-                        '<div>' +
-                            '<div class="cat-sum-label">' + escapeHTML(catName) + '</div>' +
-                            '<div class="cat-sum-val">' + formatNumber(sums[catName]) + ' <span style="font-size:12px;font-weight:500;color:var(--text-muted);">دینار</span></div>' +
-                        '</div>' +
-                    '</div>';
-            });
-            html += '</div>';
-            container.innerHTML = html;
-        }
-
-        function renderSummary() {
-            var expenses = getExpenses();
-            var now = new Date();
-            var monthlyTotal = expenses.reduce(function(s, e) {
-                var d = new Date(e.timestamp);
-                if (d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()) return s + e.amount;
-                return s;
-            }, 0);
-
-            document.getElementById('summaryMonth').textContent = getCurrentMonthName();
-            var el = document.getElementById('summaryAmount');
-            el.textContent = formatNumber(monthlyTotal);
-            animateValue(el);
-        }
-
-        function renderAll() {
-            renderStats();
-            renderCategoryDropdown();
-            renderTable();
-            renderCategorySummary();
-            renderSummary();
-        }
-
-        /* ============================
-           Salary Management
-           ============================ */
-        document.getElementById('btnSaveSalary').addEventListener('click', function() {
-            var input = document.getElementById('salaryInput');
-            var val = parseInt(input.value, 10);
-            if (isNaN(val) || val < 0) {
-                showToast('تکایە بڕێکی دروست بۆ مووچە بنووسە', 'error');
-                input.focus();
-                return;
-            }
-            setSalary(val);
-            renderStats();
-            showToast('مووچە بە سەرکەوتوویی نوێکرایەوە', 'success');
-        });
-
-        /* ============================
-           Amount Presets
-           ============================ */
-        document.getElementById('presetsWrap').addEventListener('click', function(e) {
-            var btn = e.target.closest('.preset-btn');
-            if (btn) {
-                document.getElementById('inputAmount').value = btn.getAttribute('data-val');
-                document.getElementById('inputAmount').focus();
-            }
-        });
-
-        /* ============================
-           Dynamic Category Management
-           ============================ */
-        function addNewCategory(name) {
-            name = name.trim();
-            if (!name) { showToast('تکایە ناوی جۆرەکە بنووسە', 'error'); return false; }
-            if (name.length > 30) { showToast('ناوی جۆرەکە زۆر درێژە (بەزۆرینەی 30 پیت)', 'error'); return false; }
-            var cats = getCategories();
-            if (cats.some(function(c) { return c.toLowerCase() === name.toLowerCase(); })) {
-                showToast('ئەم جۆرە پێشتر زیادکراوە', 'error');
-                return false;
-            }
-            cats.push(name);
-            setCategories(cats);
-            renderCategoryDropdown();
-            document.getElementById('inputCategory').value = name;
-            showToast('جۆری "' + name + '" بە سەرکەوتوویی زیادکرا', 'success');
-            return true;
-        }
-
-        document.getElementById('btnAddCat').addEventListener('click', function() {
-            var input = document.getElementById('newCatInput');
-            if (addNewCategory(input.value)) input.value = '';
-            input.focus();
-        });
-
-        document.getElementById('newCatInput').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                var input = document.getElementById('newCatInput');
-                if (addNewCategory(input.value)) input.value = '';
-            }
-        });
-
-        /* ============================
-           Expense Form Submission
-           ============================ */
-        document.getElementById('expenseForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            var amount = parseInt(document.getElementById('inputAmount').value, 10);
-            var category = document.getElementById('inputCategory').value;
-            var notes = document.getElementById('inputNotes').value.trim();
-
-            if (!amount || amount <= 0) {
-                showToast('تکایە بڕێکی دروست بنووسە', 'error');
-                document.getElementById('inputAmount').focus();
-                return;
-            }
-            if (!category) {
-                showToast('تکایە جۆرێک هەڵبژێرە', 'error');
-                document.getElementById('inputCategory').focus();
-                return;
-            }
-
-            var expense = {
-                id: Date.now(),
-                amount: amount,
-                category: category,
-                notes: notes,
-                timestamp: getNowISO()
-            };
-
-            var expenses = getExpenses();
-            expenses.unshift(expense);
-            setExpenses(expenses);
-
-            renderAll();
-
-            document.getElementById('inputAmount').value = '';
-            document.getElementById('inputCategory').value = '';
-            document.getElementById('inputNotes').value = '';
-            document.getElementById('inputAmount').focus();
-
-            showToast('خەرجییەکە بە سەرکەوتوویی تۆمارکرا', 'success');
-        });
-
-        /* ============================
-           Live Clock
-           ============================ */
-        function updateTimestampDisplay() {
-            document.getElementById('autoTimestamp').textContent = getNowDisplay();
-        }
-
-        /* ============================
-           Initialization
-           ============================ */
-        document.getElementById('headerDate').textContent = getTodayKurdish();
-
-        if (getCategories().length === 0) {
-            setCategories(['تاکسی', 'مارکێت', 'جگوور', 'سووتەمەنی', 'هیتر']);
-        }
-
-        renderAll();
-        updateTimestampDisplay();
-        setInterval(updateTimestampDisplay, 1000);
-    </script>
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="ftr" role="contentinfo">
+    <div class="ftr-item"><i class="fas fa-user-pen"></i> ئامادەکرن: ڕەیان یوسف سەلیم</div>
+    <div class="ftr-sep"></div>
+    <div class="ftr-item"><i class="fas fa-phone"></i> مۆبایل: 07503206040</div>
+</footer>
+
+<script>
+/* === Kurdish Utilities === */
+var kDays = ['یەکشەمبە','دووشەمبە','سێشەمبە','چوارشەمبە','پێنجشەمبە','هەینی','شەمبە'];
+var kMonths = ['کانوونی دووەم','شوبات','ئازار','نیسان','ئایار','حوزەیران','تەمووز','ئاب','ئەیلوول','تشرینی یەکەم','تشرینی دووەم','کانوونی یەکەم'];
+
+var catClrs = [
+    {bg:'rgba(59,130,246,.13)',cl:'#60a5fa'},{bg:'rgba(34,197,94,.13)',cl:'#4ade80'},
+    {bg:'rgba(251,146,60,.13)',cl:'#fb923c'},{bg:'rgba(168,85,247,.13)',cl:'#c084fc'},
+    {bg:'rgba(236,72,153,.13)',cl:'#f472b6'},{bg:'rgba(20,184,166,.13)',cl:'#2dd4bf'},
+    {bg:'rgba(234,179,8,.13)',cl:'#facc15'},{bg:'rgba(239,68,68,.13)',cl:'#f87171'}
+];
+function cStyle(i){ return catClrs[i%catClrs.length]; }
+
+/* === Storage === */
+var K_EXP='pfm3_exp', K_CAT='pfm3_cat', K_SAL='pfm3_sal';
+function ld(k,fb){ try{var d=localStorage.getItem(k);return d?JSON.parse(d):fb;}catch(e){return fb;} }
+function sv(k,d){ localStorage.setItem(k,JSON.stringify(d)); }
+function gExp(){ return ld(K_EXP,[]); }
+function sExp(a){ sv(K_EXP,a); }
+function gCat(){ return ld(K_CAT,[]); }
+function sCat(a){ sv(K_CAT,a); }
+function gSal(){ return ld(K_SAL,0); }
+function sSal(v){ sv(K_SAL,v); }
+
+/* === Date/Time === */
+function todayK(){
+    var n=new Date();
+    return 'ئەڤرۆ: '+kDays[n.getDay()]+'، '+n.getDate()+' '+kMonths[n.getMonth()];
+}
+function curMo(){ return kMonths[new Date().getMonth()]; }
+function fmtDT(iso){
+    var d=new Date(iso);
+    return d.getDate()+' '+kMonths[d.getMonth()]+' '+d.getFullYear()+'  |  '+
+        String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0');
+}
+function nowDisp(){
+    var d=new Date();
+    return d.getDate()+' '+kMonths[d.getMonth()]+' '+d.getFullYear()+' - '+
+        String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0');
+}
+function fmtN(n){ return n.toLocaleString('en-US'); }
+
+/* === Toast === */
+function toast(m,t){
+    t=t||'ok';
+    var c=document.getElementById('toastC'),el=document.createElement('div');
+    el.className='toast '+t;
+    el.innerHTML='<i class="fas '+(t==='ok'?'fa-check-circle':'fa-exclamation-circle')+'"></i> '+m;
+    c.appendChild(el);
+    setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},2800);
+}
+
+/* === Modals === */
+var pendDel=null, pendCatDel=null;
+var delM=document.getElementById('delMdl');
+var catDelM=document.getElementById('catDelMdl');
+
+function openDel(id){ pendDel=id; delM.classList.add('on'); }
+function closeDel(){ delM.classList.remove('on'); pendDel=null; }
+document.getElementById('delNo').onclick=closeDel;
+document.getElementById('delYes').onclick=function(){
+    if(pendDel!==null){ sExp(gExp().filter(function(e){return e.id!==pendDel;})); closeDel(); renderAll(); toast('خەرجییەکە سڕدرایەوە'); }
+};
+delM.onclick=function(e){if(e.target===delM)closeDel();};
+
+function openCatDel(name){ pendCatDel=name; document.getElementById('catDelTitle').textContent='سڕینەوەی جۆری "'+name+'"'; document.getElementById('catDelDesc').textContent='جۆری "'+name+'" لە لیستەکە دەسڕدرێتەوە.'; catDelM.classList.add('on'); }
+function closeCatDel(){ catDelM.classList.remove('on'); pendCatDel=null; }
+document.getElementById('catDelNo').onclick=closeCatDel;
+document.getElementById('catDelYes').onclick=function(){
+    if(pendCatDel!==null){
+        var cats=gCat().filter(function(c){return c!==pendCatDel;});
+        sCat(cats); closeCatDel(); renderAll(); toast('جۆری "'+pendCatDel+'" سڕدرایەوە');
+    }
+};
+catDelM.onclick=function(e){if(e.target===catDelM)closeCatDel();};
+
+document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){closeDel();closeCatDel();}
+});
+
+/* === Animation === */
+function vp(el){ el.classList.remove('vpop'); void el.offsetWidth; el.classList.add('vpop'); }
+
+/* === Escape HTML === */
+function esc(s){ var d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
+/* === Render Stats === */
+function rStats(){
+    var sal=gSal(), tot=gExp().reduce(function(s,e){return s+e.amount;},0), bal=sal-tot;
+    var eS=document.getElementById('stSal'),eE=document.getElementById('stExp'),eB=document.getElementById('stBal');
+    eS.textContent=fmtN(sal); eE.textContent=fmtN(tot); eB.textContent=fmtN(bal);
+    eB.style.color=bal<0?'var(--red)':'var(--grn)';
+    vp(eE); vp(eB);
+    document.getElementById('salInp').value=sal>0?sal:'';
+}
+
+/* === Render Category List (Management) === */
+function rCatList(){
+    var cats=gCat(), el=document.getElementById('catList');
+    if(cats.length===0){ el.innerHTML='<div style="font-size:13px;color:var(--t3);">هیچ جۆرێک نییە، تکایە جۆر زیاد بکە</div>'; return; }
+    var html='';
+    cats.forEach(function(cat,i){
+        var s=cStyle(i);
+        html+='<div class="cat-chip" style="background:'+s.bg+';color:'+s.cl+';border-color:'+s.cl+'22;">'+
+            '<i class="fas fa-tag" style="font-size:10px;"></i> '+esc(cat)+
+            '<button class="cat-del" data-cat="'+esc(cat)+'" aria-label="سڕینەوە" title="سڕینەوە"><i class="fas fa-times"></i></button>'+
+            '</div>';
+    });
+    el.innerHTML=html;
+    el.onclick=function(e){
+        var btn=e.target.closest('.cat-del');
+        if(btn) openCatDel(btn.getAttribute('data-cat'));
+    };
+}
+
+/* === Render Dropdown === */
+function rDrop(){
+    var cats=gCat(), sel=document.getElementById('inpCat'), cv=sel.value;
+    sel.innerHTML='<option value="" disabled selected>جۆر هەڵبژێرە</option>';
+    cats.forEach(function(c){ var o=document.createElement('option'); o.value=c; o.textContent=c; sel.appendChild(o); });
+    if(cv&&cats.indexOf(cv)!==-1) sel.value=cv;
+}
+
+/* === Render Table === */
+function rTable(){
+    var exps=gExp(), cats=gCat(), tb=document.getElementById('tBody'), em=document.getElementById('emptyS'), cn=document.getElementById('tblCnt');
+    tb.innerHTML='';
+    if(exps.length===0){ em.style.display='block'; cn.textContent='0 تۆمار'; return; }
+    em.style.display='none'; cn.textContent=exps.length+' تۆمار';
+    exps.forEach(function(exp,idx){
+        var ci=cats.indexOf(exp.category); if(ci===-1) ci=0; var s=cStyle(ci);
+        var nt=(exp.notes||'').trim(), nh='';
+        if(nt.length>0){
+            var ne=esc(nt), tr=nt.length>28?esc(nt.substring(0,28))+'...':ne;
+            nh=nt.length>28?
+                '<div class="ntw"><span class="note-cell has">'+tr+'</span><div class="ntf"><div style="font-size:10px;color:var(--gold);font-weight:700;margin-bottom:5px;">تێبینی</div>'+ne+'</div></div>':
+                '<span class="note-cell has">'+ne+'</span>';
+        } else { nh='<span class="note-cell" style="opacity:.3;">---</span>'; }
+
+        var tr2=document.createElement('tr');
+        tr2.style.animationDelay=(idx*0.025)+'s';
+        tr2.innerHTML=
+            '<td><span class="badge" style="background:'+s.bg+';color:'+s.cl+';"><i class="fas fa-tag" style="font-size:9px;"></i> '+esc(exp.category)+'</span></td>'+
+            '<td class="amt-cell">'+fmtN(exp.amount)+' دینار</td>'+
+            '<td>'+nh+'</td>'+
+            '<td class="dt-cell">'+fmtDT(exp.timestamp)+'</td>'+
+            '<td><button class="btn-del" data-id="'+exp.id+'" aria-label="سڕینەوە" title="سڕینەوە"><i class="fas fa-trash-alt"></i></button></td>';
+        tb.appendChild(tr2);
+    });
+    tb.onclick=function(e){ var b=e.target.closest('.btn-del'); if(b) openDel(parseInt(b.getAttribute('data-id'),10)); };
+}
+
+/* === Render Category Summary === */
+function rCatSum(){
+    var exps=gExp(), cats=gCat(), c=document.getElementById('catSumC');
+    var now=new Date(), cy=now.getFullYear(), cm=now.getMonth();
+    var me=exps.filter(function(e){ var d=new Date(e.timestamp); return d.getFullYear()===cy&&d.getMonth()===cm; });
+    if(me.length===0||cats.length===0){ c.innerHTML='<div class="empty-cs"><i class="fas fa-inbox" style="font-size:24px;display:block;margin-bottom:8px;opacity:.35;"></i>هیچ خەرجییەک لەم مانگەدا نییە</div>'; return; }
+    var sums={}; me.forEach(function(e){ if(!sums[e.category]) sums[e.category]=0; sums[e.category]+=e.amount; });
+    var sorted=Object.keys(sums).sort(function(a,b){return sums[b]-sums[a];});
+    var h='<div class="csg">';
+    sorted.forEach(function(cn){
+        var ci=cats.indexOf(cn); if(ci===-1) ci=0; var s=cStyle(ci);
+        h+='<div class="csc"><div class="csc-ico" style="color:'+s.cl+';"><i class="fas fa-tag"></i></div><div><div class="csc-lbl">'+esc(cn)+'</div><div class="csc-val">'+fmtN(sums[cn])+' <span style="font-size:11px;font-weight:500;color:var(--t3);">دینار</span></div></div></div>';
+    });
+    h+='</div>'; c.innerHTML=h;
+}
+
+/* === Render Summary === */
+function rSum(){
+    var exps=gExp(), now=new Date();
+    var mt=exps.reduce(function(s,e){ var d=new Date(e.timestamp); if(d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth()) return s+e.amount; return s; },0);
+    document.getElementById('sumMo').textContent=curMo();
+    var el=document.getElementById('sumAmt'); el.textContent=fmtN(mt); vp(el);
+}
+
+function renderAll(){ rStats(); rCatList(); rDrop(); rTable(); rCatSum(); rSum(); }
+
+/* === Salary === */
+document.getElementById('salBtn').onclick=function(){
+    var inp=document.getElementById('salInp'), v=parseInt(inp.value,10);
+    if(isNaN(v)||v<0){ toast('تکایە بڕێکی دروست بۆ مووچە بنووسە','er'); inp.focus(); return; }
+    sSal(v); rStats(); toast('مووچە بە سەرکەوتوویی نوێکرایەوە');
+};
+
+/* === Presets === */
+document.getElementById('preWrap').onclick=function(e){
+    var b=e.target.closest('.pre-btn');
+    if(b){ document.getElementById('inpAmt').value=b.getAttribute('data-v'); document.getElementById('inpAmt').focus(); }
+};
+
+/* === Category CRUD === */
+function addCat(name){
+    name=name.trim();
+    if(!name){ toast('تکایە ناوی جۆرەکە بنووسە','er'); return false; }
+    if(name.length>30){ toast('ناوی جۆرەکە زۆر درێژە','er'); return false; }
+    var cats=gCat();
+    if(cats.some(function(c){return c.toLowerCase()===name.toLowerCase();})){ toast('ئەم جۆرە پێشتر زیادکراوە','er'); return false; }
+    cats.push(name); sCat(cats); rCatList(); rDrop();
+    document.getElementById('inpCat').value=name;
+    toast('جۆری "'+name+'" بە سەرکەوتوویی زیادکرا'); return true;
+}
+document.getElementById('catAddBtn').onclick=function(){ var i=document.getElementById('catInp'); if(addCat(i.value)) i.value=''; i.focus(); };
+document.getElementById('catInp').onkeydown=function(e){ if(e.key==='Enter'){ e.preventDefault(); var i=document.getElementById('catInp'); if(addCat(i.value)) i.value=''; } };
+
+/* === Form Submit === */
+document.getElementById('expForm').onsubmit=function(e){
+    e.preventDefault();
+    var amt=parseInt(document.getElementById('inpAmt').value,10), cat=document.getElementById('inpCat').value, notes=document.getElementById('inpNotes').value.trim();
+    if(!amt||amt<=0){ toast('تکایە بڕێکی دروست بنووسە','er'); document.getElementById('inpAmt').focus(); return; }
+    if(!cat){ toast('تکایە جۆرێک هەڵبژێرە','er'); document.getElementById('inpCat').focus(); return; }
+    var exp={id:Date.now(),amount:amt,category:cat,notes:notes,timestamp:new Date().toISOString()};
+    var exps=gExp(); exps.unshift(exp); sExp(exps); renderAll();
+    document.getElementById('inpAmt').value=''; document.getElementById('inpCat').value=''; document.getElementById('inpNotes').value='';
+    document.getElementById('inpAmt').focus();
+    toast('خەرجییەکە بە سەرکەوتوویی تۆمارکرا');
+};
+
+/* === Clock === */
+function updTS(){ document.getElementById('tsDisp').textContent=nowDisp(); }
+
+/* === Init === */
+document.getElementById('hdrDate').textContent=todayK();
+if(gCat().length===0) sCat(['تاکسی','مارکێت','جگوور','سووتەمەنی','هیتر']);
+renderAll(); updTS(); setInterval(updTS,1000);
+</script>
 </body>
 </html>
